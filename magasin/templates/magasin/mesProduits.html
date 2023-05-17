@@ -1,0 +1,89 @@
+{% extends 'magasin/base.html' %}
+{% block title %} Catalogue de produits {% endblock title %}
+<!--dropdown-->
+{% block navs %}
+{% for cat in categorie %}
+{% if cat.name == 'Al' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Alimentaire</a></li>
+{% endif %}
+{% if cat.name == 'Mb' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Meuble</a></li>
+{% endif %}
+{% if cat.name == 'Sn' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Sanitaire</a></li>
+{% endif %}
+{% if cat.name == 'Vs' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Vaisselle</a></li>
+{% endif %}
+{% if cat.name == 'Vt' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Vêtement</a></li>
+{% endif %}
+{% if cat.name == 'Jx' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Jouets</a></li>
+{% endif %}
+{% if cat.name == 'Lg' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Linge de Maison</a></li>
+{% endif %}
+{% if cat.name == 'Bj' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Bijoux</a></li>
+{% endif %}
+{% if cat.name == 'Dc' %}
+<li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Décor</a></li>
+{% endif %}
+{% endfor %}
+{% endblock %}
+{% block content %}
+<!-- body -->
+<form method='POST' class="post-form" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="container">
+        <div style="overflow:scroll; border:#000000 1px solid;">
+            <table>
+                <tr>
+                    {% for article in products %}
+                    <td>
+                        <img src='/media/{{ article.img }}' class="rounded float-start" height="200px" width="200px"
+                            alt="">
+                        <figcaption class="figure-caption">
+                            {{article.libelle}}
+                        </figcaption>
+                        <p> {{article.img}} </p>
+                        <p> {{article.prix}} DT. </p>
+                    </td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
+</form>
+</div>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <a type="button" class="btn btn-danger" href="/ajoutProd">Add</a>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in products %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src='/media/{{ product.img }}' />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{product.libelle}}</h5>
+                            <!-- Product price-->
+                            {{product.prix}}
+                            <p> {{product.Fournisseur_id}}. </p>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                href="/descArt/{{product.id}}">Plus</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

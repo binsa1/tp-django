@@ -1,0 +1,61 @@
+{% extends 'magasin/base.html' %}
+{% block title %} Description de cette article {% endblock title %}
+<!--dropdown-->
+{% block navs %}
+{% for cat in categorie %}
+{% if cat.name == 'Al' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Alimentaire</a></li>
+{% endif %}
+{% if cat.name == 'Mb' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Meuble</a></li>
+{% endif %}  
+{% if cat.name == 'Sn' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Sanitaire</a></li>
+{% endif %}  
+{% if cat.name == 'Vs' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Vaisselle</a></li>
+{% endif %}  
+{% if cat.name == 'Vt' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Vêtement</a></li>
+{% endif %}  
+{% if cat.name == 'Jx' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Jouets</a></li>
+{% endif %}
+{% if cat.name == 'Lg' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Linge de Maison</a></li>
+{% endif %}
+{% if cat.name == 'Bj' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Bijoux</a></li>
+{% endif %}
+{% if cat.name == 'Dc' %}
+            <li><a class="dropdown-item" href="/listeCat/{{cat.id}}">Décor</a></li>
+{% endif %}             
+{% endfor %}
+{% endblock %}
+{% block content %}
+<!-- body -->
+{% for product in products %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                    <h1 class="display-5 fw-bolder text-white mb-2">{{product.description}}</h1>
+                    <p class="lead fw-normal text-white-50 mb-4">Quantiter d'achats :</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="number" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
+                        <span class="input-group-text" id="addon-wrapping">Qte</span>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Ajouter au panier</a>
+                        <a class="btn btn-outline-light btn-lg px-4" href="/">Retour</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="{{product.img.url}}" alt="..." /></div>
+        </div>
+    </div>
+</header>
+{% endfor %}
+{% endblock %}
