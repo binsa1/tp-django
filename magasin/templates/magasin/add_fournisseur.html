@@ -1,5 +1,6 @@
 {% extends 'magasin/base.html' %}
-{% block title %} Ajout Produit {% endblock title %}
+{% block title %} Ajout fournisseur {% endblock title %}
+<!--dropdown-->
 {% block navs %}
 {% for cat in categorie %}
 {% if cat.name == 'Al' %}
@@ -33,11 +34,12 @@
 {% endblock %}
 {% block content %}
  <div class="col-md-12 text-center">
- <h2>Manip Produit ...... </h2>
+ <h2>Add fournisseur    </h2>
  </div>
- <form method='POST' class="post-form" enctype='multipart/form-data'>
- {% csrf_token %}
- {{ form.as_p }}
- <button type="sumit" class="btn btn-default">Enregistrer</button>
- </form>
+<!-- add_fournisseur.html -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" >Add fournisseur</button>
+  </form>
 {% endblock %}

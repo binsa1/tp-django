@@ -1,3 +1,4 @@
+from rest_framework import viewsets
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -5,7 +6,7 @@ from django.template import loader
 from .models import Produit
 from .models import Categorie
 from .models import *
-from .forms import ProduitForm,UserRegistrationForm
+from .forms import FournisseurForm, ProduitForm,UserRegistrationForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -69,11 +70,11 @@ class CategoryAPIView(APIView):
       categories = Categorie.objects.all()
       serializer = CategorySerializer(categories, many=True)
       return Response(serializer.data)
-class ProduitAPIView(APIView):
-   def get(self, *args, **kwargs):
-      categories = Produit.objects.all()
-      serializer = ProduitSerializer(categories, many=True)
-      return Response(serializer.data)  
+# class ProduitAPIView(APIView):
+#    def get(self, *args, **kwargs):
+#       categories = Produit.objects.all()
+#       serializer = ProduitSerializer(categories, many=True)
+#       return Response(serializer.data)  
 class FournisseurAPIView(APIView):
    def get(self, *args, **kwargs):
       fournisseurs = Fournisseur.objects.all()
@@ -85,11 +86,35 @@ class ProduitNCAPIView(APIView):
       produitNC = ProduitNC.objects.all()
       serializer = ProduitNCSerializer(produitNC, many=True)
       return Response(serializer.data) 
-class ProductViewset(APIView):
-   serializer_class = ProduitSerializer
-   def get_queryset(self):
-      queryset = Produit.objects.filter(active=True)
-      category_id = self.request.GET.get('category_id')
-      if category_id:
-         yset = queryset.filter(categorie_id=category_id)
-      return queryset   
+# class ProductViewset(APIView):
+#    serializer_class = ProduitSerializer
+#    def get_queryset(self):
+#       queryset = Produit.objects.filter(active=True)
+#       category_id = self.request.GET.get('category_id')
+#       if category_id:
+#          queryset = queryset.filter(categorie_id=category_id)
+#       return queryset   
+class ProductAPIView(APIView):
+        def get(self, *args, **kwargs):
+            produits = Produit.objects.all()
+            serializer = ProduitSerializer(produits, many=True)
+            return Response(serializer.data)
+
+class ProductViewset(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ProduitSerializer
+    def get_queryset(self):
+        queryset = Produit.objects.filter()
+        category_id = self.request.GET.get('category_id')
+        if category_id:
+            queryset = queryset.filter(categorie_id=category_id)
+        return queryset
+def add_fournisseur(request):
+    if request.method == 'POST':
+        form = FournisseurForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listeFour')  
+    else:
+        form = FournisseurForm()
+
+    return render(request, 'magasin/add_fournisseur.html', {'form': form})

@@ -7,7 +7,8 @@ class CategorySerializer(ModelSerializer):
 class ProduitSerializer(ModelSerializer):
     class Meta:
         model = Produit
-        fields = ['id', 'libelle','description','catégorie_id']        
+        fields = ['id', 'libelle','description','catégorie_id']
+        
 class FournisseurSerializer(ModelSerializer):
     class Meta:
         model = Fournisseur
